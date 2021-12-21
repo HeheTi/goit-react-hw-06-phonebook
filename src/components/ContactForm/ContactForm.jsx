@@ -1,39 +1,70 @@
 import { useState } from 'react';
-
+import { useSelector, useDispatch } from 'react-redux';
 import { nanoid } from 'nanoid';
 import Input from '../../common/Input';
+import { addItem } from '../../redux/contacts/contactsActions';
+import { normalizeName } from '../../services/normalize';
 import s from './ContactForm.module.css';
 
-const ContactForm = ({ onSubmitForm }) => {
-  const [dataForm, setdataForm] = useState({
-    name: '',
-    number: '',
-  });
+const ContactForm = () => {
+  const contacts = useSelector(state => state.contacts.items);
+  const dispatch = useDispatch();
 
-  const resetForm = () =>
-    setdataForm({
-      name: '',
-      number: '',
-    });
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
+
+  // const [dataForm, setdataForm] = useState({
+  //   name: '',
+  //   number: '',
+  // });
+
+  const resetForm = () => {
+    setName('');
+    setNumber('');
+  };
+
+  // const addDataForm = e => {
+  //   return setdataForm(prevState => ({
+  //     ...prevState,
+  //     [e.target.name]: e.target.value,
+  //   }));
+  // };
 
   const addDataForm = e => {
-    return setdataForm(prevState => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
+    const { name, value } = e.target;
+
+    switch (name) {
+      case 'name':
+        return setName(value);
+
+      case 'number':
+        return setNumber(value);
+
+      default:
+        return;
+    }
   };
 
   const onSubFormData = e => {
     e.preventDefault();
 
-    const objData = { id: nanoid(), ...dataForm };
+    const objData = { id: nanoid(), name, number };
 
-    onSubmitForm(objData);
+    addContacts(objData);
 
     resetForm();
   };
 
-  const { name, number } = dataForm;
+  const addContacts = obj => {
+    const isHaveName = contacts.some(({ name }) => name === obj.name);
+
+    if (isHaveName) {
+      return alert(`${normalizeName(obj.name)} is alredy in contacts.`);
+    }
+
+    dispatch(addItem(obj));
+  };
+
   return (
     <form onSubmit={onSubFormData} className={s.form}>
       <Input
@@ -59,7 +90,6 @@ const ContactForm = ({ onSubmitForm }) => {
       />
 
       <button type="submit" className={s.btnAdd}>
-        {' '}
         Add contact
       </button>
     </form>
