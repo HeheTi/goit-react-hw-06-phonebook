@@ -24,10 +24,14 @@ function Filter({ filter, onChangeFilter }) {
   );
 }
 
+// УНИВЕРСАЛЬНЫЙ СПОСОБ СВЯЗАТЬ РЕДАКС С КОМПОНЕНЬЛМ (РАБОТАЕТ И ДЛЯ КДАССОВ, И ДЛЯ ФУНКЦИИ)
+
 Filter.propTypes = {
   onChangeFilter: PropTypes.func,
   filter: PropTypes.string,
 };
+
+// УНИВЕРСАЛЬНЫЙ СПОСОБ СВЯЗАТЬ РЕДАКС С КОМПОНЕНЬЛМ (РАБОТАЕТ И ДЛЯ КДАССОВ, И ДЛЯ ФУНКЦИИ)
 
 const mapStateToProps = state => ({
   filter: state.contacts.filter,

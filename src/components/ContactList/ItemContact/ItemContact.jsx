@@ -28,5 +28,3 @@ ItemContact.propTypes = {
 };
 
 export default ItemContact;
-
-//<button onClick={onClickBtn} type="button">

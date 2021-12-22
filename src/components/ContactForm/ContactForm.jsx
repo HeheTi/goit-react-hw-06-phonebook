@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { nanoid } from 'nanoid';
 import Input from '../../common/Input';
 import { addItem } from '../../redux/contacts/contactsActions';
 import { normalizeName } from '../../services/normalize';
@@ -48,9 +47,7 @@ const ContactForm = () => {
   const onSubFormData = e => {
     e.preventDefault();
 
-    const objData = { id: nanoid(), name, number };
-
-    addContacts(objData);
+    addContacts({ name, number });
 
     resetForm();
   };

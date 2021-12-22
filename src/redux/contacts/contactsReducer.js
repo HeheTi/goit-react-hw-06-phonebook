@@ -1,38 +1,30 @@
-import { combineReducers } from 'redux';
-import TYPES from './contactsTypes';
+import { createReducer, combineReducers } from '@reduxjs/toolkit';
+import { addItem, removeItem, changeFilter } from './contactsActions';
 
-// contacts: {
-//     items: [],
-//     filter: '',
-//   },
+// ИСПОЛЬЗУЯ КОЛБЕК builder
 
-//action = {type: "action/types", payload: data}
+const itemsReduser = createReducer([], builder => {
+  builder
+    .addCase(addItem, (state, action) => [...state, action.payload])
+    .addCase(removeItem, (state, action) =>
+      state.filter(item => item.id !== action.payload),
+    );
+});
 
-const itemsReduser = (state = [], action) => {
-  switch (action.type) {
-    case TYPES.SET:
-      return action.payload;
+const filerReduser = createReducer('', builder => {
+  builder.addCase(changeFilter, (_, action) => action.payload);
+});
 
-    case TYPES.ADD:
-      return [...state, action.payload];
+// ИСПОЛЬЗУЯ ОБЪЕКТ С ПОЛЯМИ-ТИПАМИ ACTIONS
+// const itemsReduser = createReducer([], {
+//   [addItem]: (state, action) => [...state, action.payload],
+//   [removeItem]: (state, action) =>
+//     state.filter(item => item.id !== action.payload),
+// });
 
-    case TYPES.DELETE:
-      return state.filter(item => item.id !== action.payload);
-
-    default:
-      return state;
-  }
-};
-
-const filerReduser = (state = '', action) => {
-  switch (action.type) {
-    case TYPES.FILTER:
-      return action.payload;
-
-    default:
-      return state;
-  }
-};
+// const filerReduser = createReducer('', {
+//   [changeFilter]: (_, action) => action.payload,
+// });
 
 const contactsReduser = combineReducers({
   items: itemsReduser,
