@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { createLogger } from 'redux-logger';
 import {
   persistStore,
   persistReducer,
@@ -9,9 +10,8 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
-import { createLogger } from 'redux-logger';
 import storage from 'redux-persist/lib/storage';
-import contactsReduser from './contacts/contactsReducer';
+import contactsReducer from './contacts/contactsActionsSlice';
 
 // {
 //   contacts: {
@@ -21,7 +21,7 @@ import contactsReduser from './contacts/contactsReducer';
 // }
 
 const persistContactsConfig = {
-  key: 'contacts',
+  key: 'items',
   storage,
   whitelist: ['items'],
 };
@@ -33,7 +33,7 @@ const logger = createLogger({
 
 const store = configureStore({
   reducer: {
-    contacts: persistReducer(persistContactsConfig, contactsReduser),
+    contacts: persistReducer(persistContactsConfig, contactsReducer),
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

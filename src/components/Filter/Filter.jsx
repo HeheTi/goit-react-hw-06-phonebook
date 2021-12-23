@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 import { connect } from 'react-redux';
 import Input from '../../common/Input';
-import { changeFilter } from '../../redux/contacts/contactsActions';
+import { contactsActions } from '../../redux/contacts';
 
 function Filter({ filter, onChangeFilter }) {
   const onChangeFilterValue = useCallback(
@@ -38,7 +38,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onChangeFilter: value => dispatch(changeFilter(value)),
+  onChangeFilter: value => dispatch(contactsActions.changeFilter(value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Filter);

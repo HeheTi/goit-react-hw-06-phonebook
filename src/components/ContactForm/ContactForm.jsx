@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Input from '../../common/Input';
-import { addItem } from '../../redux/contacts/contactsActions';
+import { contactsActions } from '../../redux/contacts';
 import { normalizeName } from '../../services/normalize';
 import s from './ContactForm.module.css';
 
@@ -12,22 +12,10 @@ const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
-  // const [dataForm, setdataForm] = useState({
-  //   name: '',
-  //   number: '',
-  // });
-
   const resetForm = () => {
     setName('');
     setNumber('');
   };
-
-  // const addDataForm = e => {
-  //   return setdataForm(prevState => ({
-  //     ...prevState,
-  //     [e.target.name]: e.target.value,
-  //   }));
-  // };
 
   const addDataForm = e => {
     const { name, value } = e.target;
@@ -59,7 +47,7 @@ const ContactForm = () => {
       return alert(`${normalizeName(obj.name)} is alredy in contacts.`);
     }
 
-    dispatch(addItem(obj));
+    dispatch(contactsActions.addItem(obj));
   };
 
   return (

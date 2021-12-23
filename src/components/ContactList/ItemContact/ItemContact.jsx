@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { removeItem } from '../../../redux/contacts/contactsActions';
+import { contactsActions } from '../../../redux/contacts';
 import { normalizeName } from '../../../services/normalize';
 import s from './ItemContact.module.css';
 
@@ -12,7 +12,7 @@ const ItemContact = ({ name, number, id }) => {
       {normalizeName(name)}: {number}
       <button
         className={s.btnDel}
-        onClick={() => dispatch(removeItem(id))}
+        onClick={() => dispatch(contactsActions.removeItem(id))}
         type="button"
       >
         Delete

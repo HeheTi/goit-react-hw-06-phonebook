@@ -1,25 +1,31 @@
 import { useEffect, memo, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { changeFilter } from '../../redux/contacts/contactsActions';
 import ItemContact from './ItemContact';
+import { contactsActions } from '../../redux/contacts';
 import s from './ContactList.module.css';
 
 const ContactList = () => {
-  const filter = useSelector(state => state.contacts.filter);
   const contacts = useSelector(state => state.contacts.items);
+
+  const filter = useSelector(state => state.contacts.filter);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (contacts.length === 1) {
-      dispatch(changeFilter(''));
+      dispatch(contactsActions.changeFilter(''));
     }
   }, [contacts.length, dispatch]);
 
   const filterContacts = useMemo(() => {
     const normalizedData = filter.toLowerCase();
-    return contacts.filter(({ name }) =>
-      name.toLowerCase().includes(normalizedData),
-    );
+
+    const array = contacts.filter(item => {
+      const normName = item.name.toLowerCase();
+      return normName.includes(normalizedData);
+    });
+
+    return array;
   }, [contacts, filter]);
 
   return (
