@@ -19,6 +19,16 @@ import contactsReducer from './contacts/contactsActionsSlice';
 //     filter: ''
 //   }
 // }
+// {
+//   contacts: {
+// data: {
+//     items: [],
+//     loading: false,
+//     error: null,
+//   },
+// filter: '',
+//   }
+// }
 
 const persistContactsConfig = {
   key: 'items',
